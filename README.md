@@ -24,15 +24,9 @@ Aside from docker and kubernetes, I want to practise with Golang and Rust, eithe
 Also, a couple of VMs are required for testing purposes. One windows 11 vm is necessary to ensure crossfunctional capabilities when writing applications.
 After careful consideration and research, I want to partition the SSD into the following:
 
-/dev/nvme0n1p1 - 512MB - EFI System - not encrypted - FAT32 formatted - for UEFI Boot
-/dev/nvme0n1p2 - 2GB - Linux filesystem - not encrypted - ext4 formatted - for the bootloader files (/boot)
-/dev/nvme0n1p3 - 220GB - linux root x86-64 - LUKS encrypted - BTRFS formatted - for default mount + wayland/hyprland / userspace
-/dev/nvme0n1p4 - 120GB - Microsoft basic data - LUKS encrypted - NTFS formatted -  for one dedicated windows 11 virtual machine, starting at 80GB with possibility to extend to 120GB max
-/dev/nvme0n1p5 - 150GB - linux LVM - LUKS encrypted - ext4 formatted - for multiple virtual linux machines
-/dev/nvme0n1p6 - 450GB - Linux filesystem - LUKS encrypted - xfs formatted (mkfs.xfs -n ftype=1) - for docker local and kubernetes
-/dev/nvme0n1p7 - 10GB - linux swap - LUKS encrypted - initialize with makeswap - for zram backup - used during hibernation or zram overload
-
-
-/dev/nvme0n1p3 should be the partition that will use applications like vscode, vim, virtlib+qemu, maybe mail applications, browsers. I think 220GB would be enough to support this. After configuring zram and installing the arch linux system, it would probably have 150GB left
-/dev/nvme0n1p5 should be big enough to support multiple logical volumes
-/dev/nvme0n1p6 for heavy use of docker / kubernetes, can ask a lot of resources, therefore 450GB should be reasonable.
+Partition       | Size   | Mount Point  | Partition Type       | Filesystem  | Encryption  | Purpose
+:---            | :---   | :---         | :---                 | :---        | :---        | :---
+/dev/nvme0n1p1  | 512MB  | /boot/efi    | EFI System           | FAT32       | No          | EFI Partition for UEFI Boot
+/dev/nvme0n1p2  | 2GB    | /boot        | Linux Filesystem     | ext4        | No          | Bootloader files
+/dev/nvme0n1p3  | 50GB   | -            | Linux Swap           | swap        | Yes         | Hibernation and zram overflow
+/dev/nvme0n1p4  | 150GB  | /            | Linux Root (x86-64)  | btrfs       | Yes         | Root with Wayland/Hyprland
