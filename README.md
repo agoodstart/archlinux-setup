@@ -38,13 +38,15 @@ Partition       | Size   | Mount Point  | Partition Type       | Filesystem  | E
 ## Sources: 
 
 ### Installation
-* https://www.youtube.com/watch?v=kXqk91R4RwU&t
-* https://github.com/IvnLum/Arch-Linux-Crypt-Install/blob/main/cryptinst.sh
-* https://gist.github.com/dante-robinson/fdc55726991d3f17e0dbef1701d343ef
-* https://bbs.archlinux.org/viewtopic.php?id=261327
-* https://wiki.archlinux.org/title/Persistent_block_device_naming
-* https://www.youtube.com/watch?v=H_g1sf1PWt0
-* https://www.youtube.com/watch?v=fFxWuYui2LI
-* https://github.com/gissf1/zram-hibernate
+* [(Youtube) Installation with LUKS](https://www.youtube.com/watch?v=kXqk91R4RwU&t)
+* [(Gist) Crypt installation script](https://github.com/IvnLum/Arch-Linux-Crypt-Install/blob/main/cryptinst.sh)
+* [(Gist Arch Installation Guide](https://gist.github.com/dante-robinson/fdc55726991d3f17e0dbef1701d343ef)
+* [(Arch Forum) TMPFS Config](https://bbs.archlinux.org/viewtopic.php?id=261327)
+* [(Arch Wiki) Block device naming](https://wiki.archlinux.org/title/Persistent_block_device_naming)
+* [(Youtube) BTRFS, ZRAM, TimeShift](https://www.youtube.com/watch?v=fFxWuYui2LI)
+
+
 
 ### Post Installation
+* [(GitHub) ZRAM Hibernate](https://github.com/gissf1/zram-hibernate)
+* [(Youtube) HyDE](https://www.youtube.com/watch?v=H_g1sf1PWt0)
