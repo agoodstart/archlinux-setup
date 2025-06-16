@@ -8,6 +8,7 @@ Sources:
 * https://wiki.archlinux.org/title/Persistent_block_device_naming
 * https://www.youtube.com/watch?v=H_g1sf1PWt0
 * https://www.youtube.com/watch?v=fFxWuYui2LI
+* https://github.com/gissf1/zram-hibernate
 
 I am in the process of building a new machine with arch linux.
 The target machine is a dell xps 15 9500 laptop with the following specs:
