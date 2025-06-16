@@ -1,4 +1,4 @@
-# Laptop setup with Arch Linux
+# Laptop setup with Arch Linux (WIP)
 - - - -
 Sources: 
 * https://www.youtube.com/watch?v=kXqk91R4RwU&t
@@ -24,7 +24,7 @@ Therefore, I want to reserve appropriate space for docker and kubernetes usage.
 Aside from docker and kubernetes, I want to practise with Golang and Rust, either in root, or in their dedicated Docker containers to ensure isolation.
 Also, a couple of VMs are required for testing purposes. One windows 11 vm is necessary to ensure crossfunctional capabilities when writing applications.
 
-After careful consideration and research, I want to partition the SSD into the following:
+After careful consideration and research, I want to partition the SSD into the following and will be added to fstab:
 
 Partition       | Size   | Mount Point  | Partition Type       | Filesystem  | Encryption  | Purpose
 :---            | :---   | :---         | :---                 | :---        | :---        | :---
@@ -32,3 +32,11 @@ Partition       | Size   | Mount Point  | Partition Type       | Filesystem  | E
 /dev/nvme0n1p2  | 2GB    | /boot        | Linux Filesystem     | ext4        | No          | Bootloader files
 /dev/nvme0n1p3  | 50GB   | -            | Linux Swap           | swap        | Yes         | Hibernation and zram overflow
 /dev/nvme0n1p4  | 150GB  | /            | Linux Root (x86-64)  | btrfs       | Yes         | Root with Wayland/Hyprland
+
+I want to add the following settings too, but that would be post-installation and will be :
+Partition       | Size   | Mount Point  | Partition Type       | Filesystem  | Encryption  | Purpose
+:---            | :---   | :---         | :---                 | :---        | :---        | :---
+/dev/nvme0n1p5  | 350GB  | /con         | Linux Filesystem     | XFS         | Yes         | Docker and Kubernetes
+/dev/nvme0n1p6  | 200GB  | /virt_lin    | Linux LVM            | LVM         | Yes         | Linux VMs
+/dev/nvme0n1p7  | 120GB  | /virt_win    | Linux Filesystem     | ext4        | Yes         | Windows 11 VM
+/dev/nvme0n1p8  | 25GB   | -            | -                    | -           | -           | Reserved space
