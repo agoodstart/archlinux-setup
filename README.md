@@ -20,8 +20,10 @@ The target machine is a Dell XPS 15 9500 with the following specs:
 
 The goal of this setup is for personal use, as well as local development, as I want to practise heavily with Docker and Kubernetes. 
 Therefore, I want to reserve appropriate space for docker and kubernetes usage.
+
 Aside from docker and kubernetes, I want to practise with Golang and Rust, either in root, or in their dedicated Docker containers to ensure isolation.
 Also, a couple of VMs are required for testing purposes. One windows 11 vm is necessary to ensure crossfunctional capabilities when writing applications.
+
 After careful consideration and research, I want to partition the SSD into the following:
 
 Partition       | Size   | Mount Point  | Partition Type       | Filesystem  | Encryption  | Purpose
