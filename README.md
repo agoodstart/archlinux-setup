@@ -37,6 +37,17 @@ Partition       | Size   | Mount Point  | Partition Type       | Filesystem  | E
 
 ## Sources: 
 
+### Benchmarking
+* https://www.assyoma.it/single-post/2015/02/02/zfs-btrfs-xfs-ext4-and-lvm-with-kvm-a-storage-performance-comparison
+* https://gist.github.com/braindevices/fde49c6a8f6b9aaf563fb977562aafec
+* https://forum.endeavouros.com/t/considering-some-btrfs-optimizations/27025
+
+### Others
+* https://www.youtube.com/watch?v=YC7NMbl4goo
+* https://www.youtube.com/watch?v=c5KkTZ1HbHo
+* https://www.youtube.com/watch?v=Qgg5oNDylG8
+* https://www.youtube.com/watch?v=83ZZp8wJ-UY
+
 ### Installation
 * [(Youtube) Installation with LUKS](https://www.youtube.com/watch?v=kXqk91R4RwU&t)
 * [(Gist) Crypt installation script](https://github.com/IvnLum/Arch-Linux-Crypt-Install/blob/main/cryptinst.sh)
@@ -46,7 +57,7 @@ Partition       | Size   | Mount Point  | Partition Type       | Filesystem  | E
 * [(Youtube) BTRFS, ZRAM, TimeShift](https://www.youtube.com/watch?v=fFxWuYui2LI)
 
 
-
 ### Post Installation
 * [(GitHub) ZRAM Hibernate](https://github.com/gissf1/zram-hibernate)
 * [(Youtube) HyDE](https://www.youtube.com/watch?v=H_g1sf1PWt0)
+* [(Youtube) Post Installation](https://www.youtube.com/watch?v=8Oz4CIB4YjU)
