@@ -1,15 +1,8 @@
-# Laptop setup with Arch Linux (WIP)
-- - - -
-Sources: 
-* https://www.youtube.com/watch?v=kXqk91R4RwU&t
-* https://github.com/IvnLum/Arch-Linux-Crypt-Install/blob/main/cryptinst.sh
-* https://gist.github.com/dante-robinson/fdc55726991d3f17e0dbef1701d343ef
-* https://bbs.archlinux.org/viewtopic.php?id=261327
-* https://wiki.archlinux.org/title/Persistent_block_device_naming
-* https://www.youtube.com/watch?v=H_g1sf1PWt0
-* https://www.youtube.com/watch?v=fFxWuYui2LI
-* https://github.com/gissf1/zram-hibernate
+# Laptop setup with Arch Linux (WIP) #
 
+### TOC ###
+
+## Machine Specs
 I am in the process of building a new machine with Arch Linux.
 The target machine is a Dell XPS 15 9500 with the following specs:
 * 15.6" UHD+ (3840 x 2400) InfinityEdge Touch AntiReflective 500-Nit Display
@@ -19,11 +12,11 @@ The target machine is a Dell XPS 15 9500 with the following specs:
 * Killer Wi-fi 6 AX500-DBS (2x2) and Bluetooth 5.0 
 
 The goal of this setup is for personal use, as well as local development, as I want to practise heavily with Docker and Kubernetes. 
-Therefore, I want to reserve appropriate space for docker and kubernetes usage.
 
 Aside from docker and kubernetes, I want to practise with Golang and Rust, either in root, or in their dedicated Docker containers to ensure isolation.
 Also, a couple of VMs are required for testing purposes. One windows 11 vm is necessary to ensure crossfunctional capabilities when writing applications.
 
+## Partitioning
 After careful consideration and research, I want to partition the SSD into the following and will be added to fstab:
 
 Partition       | Size   | Mount Point  | Partition Type       | Filesystem  | Encryption  | Purpose
@@ -40,3 +33,18 @@ Partition       | Size   | Mount Point  | Partition Type       | Filesystem  | E
 /dev/nvme0n1p6  | 200GB  | /virt_lin    | Linux LVM            | LVM         | Yes         | Linux VMs
 /dev/nvme0n1p7  | 120GB  | /virt_win    | Linux Filesystem     | ext4        | Yes         | Windows 11 VM
 /dev/nvme0n1p8  | 25GB   | -            | -                    | -           | -           | Reserved space
+
+
+## Sources: 
+
+### Installation
+* https://www.youtube.com/watch?v=kXqk91R4RwU&t
+* https://github.com/IvnLum/Arch-Linux-Crypt-Install/blob/main/cryptinst.sh
+* https://gist.github.com/dante-robinson/fdc55726991d3f17e0dbef1701d343ef
+* https://bbs.archlinux.org/viewtopic.php?id=261327
+* https://wiki.archlinux.org/title/Persistent_block_device_naming
+* https://www.youtube.com/watch?v=H_g1sf1PWt0
+* https://www.youtube.com/watch?v=fFxWuYui2LI
+* https://github.com/gissf1/zram-hibernate
+
+### Post Installation
