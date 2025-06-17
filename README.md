@@ -16,8 +16,41 @@ The goal of this setup is for personal use, as well as local development, as I w
 Aside from docker and kubernetes, I want to practise with Golang and Rust, either in root, or in their dedicated Docker containers to ensure isolation.
 Also, a couple of VMs are required for testing purposes. One windows 11 vm is necessary to ensure crossfunctional capabilities when writing applications.
 
+## Pre setup
+
+### Connect to internet
+`iwctl`
+```
+station wlan0 scan
+station wlan0 get-networks
+station wlan0 connect <SSID>
+```
+
+### SSH into Arch Linux
+
+Get IPv4 address of the laptop:
+
+`ip -4 -o a show eth0 | awk '{print $4}' | cut -d/ -f1`
+
+Check if SSH daemon is running:
+
+`systemctl status sshd`
+
+if not, turn on:
+
+`systemctl start sshd`
+
+Set password of root (or go for passwordless login, but I would configure that post installation)
+
+`passwd root`
+
+From another machine, SSH into the laptop:
+
+`ssh root@<IPv4 address>`
+
 ## Partitioning
-After careful consideration and research, I want to partition the SSD into the following and will be added to fstab:
+### Partition Table
+I want to partition the SSD into the following and will be added to fstab:
 
 Partition       | Size   | Mount Point  | Partition Type       | Filesystem  | Encryption  | Purpose
 :---            | :---   | :---         | :---                 | :---        | :---        | :---
@@ -33,6 +66,13 @@ Partition       | Size   | Mount Point  | Partition Type       | Filesystem  | E
 /dev/nvme0n1p6  | 200GB  | /virt_lin    | Linux LVM            | LVM         | Yes         | Linux VMs
 /dev/nvme0n1p7  | 120GB  | /virt_win    | Linux Filesystem     | ext4        | Yes         | Windows 11 VM
 /dev/nvme0n1p8  | 25GB   | -            | -                    | -           | -           | Reserved space
+
+### Formatting
+
+Format with fdisk:
+
+`fdisk /dev/nvme0n1`
+
 
 
 ## Sources: 
@@ -51,7 +91,7 @@ Partition       | Size   | Mount Point  | Partition Type       | Filesystem  | E
 ### Installation
 * [(Youtube) Installation with LUKS](https://www.youtube.com/watch?v=kXqk91R4RwU&t)
 * [(Gist) Crypt installation script](https://github.com/IvnLum/Arch-Linux-Crypt-Install/blob/main/cryptinst.sh)
-* [(Gist Arch Installation Guide](https://gist.github.com/dante-robinson/fdc55726991d3f17e0dbef1701d343ef)
+* [(Gist Arch) Installation Guide](https://gist.github.com/dante-robinson/fdc55726991d3f17e0dbef1701d343ef)
 * [(Arch Forum) TMPFS Config](https://bbs.archlinux.org/viewtopic.php?id=261327)
 * [(Arch Wiki) Block device naming](https://wiki.archlinux.org/title/Persistent_block_device_naming)
 * [(Youtube) BTRFS, ZRAM, TimeShift](https://www.youtube.com/watch?v=fFxWuYui2LI)
