@@ -48,6 +48,11 @@ From another machine, SSH into the laptop:
 
 `ssh root@<IPv4 address>`
 
+Because the identity of the laptop will change, it is better to not save the SSH connection in known_hosts,
+or add the key to authorized_keys:
+
+`ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@<IPv4 address>`
+
 ## Partitioning
 ### Partition Table
 I want to partition the SSD into the following and will be added to fstab:
