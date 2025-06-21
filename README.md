@@ -78,6 +78,108 @@ Format with fdisk:
 
 `fdisk /dev/nvme0n1`
 
+### Needs rework
+
+```
+sudo dd if=/dev/zero of=/dev/nvme0n1 bs=1M status=progress
+
+mkfs.fat -F32 -n EFI /dev/nvnem0n1p1
+mkfs.ext4 -L BOOT /dev/nvme0n1p2
+ 
+cryptsetup luksFormat --type luks1 /dev/nvme0n1p3
+cryptsetup open /dev/nvme0n1p3 swapreserve
+mkswap -L SWAP -U random /dev/mapper/swapreserve
+swapon --discard=pages -p 10 /dev/mapper/swapreserve
+
+cryptsetup luksFormat --type luks1 /dev/nvme0n1p4
+cryptsetup open /dev/nvme0n1p4 archroot
+
+mkfs.btrfs -L ROOT /dev/mapper/archroot
+
+mount -t btrfs /dev/mapper/archroot /mnt
+cd /mnt
+btrfs su cr @
+btrfs su cr @home
+btrfs su cr @snapshots
+cd
+umount /mnt
+
+mount -t btrfs -o rw,noatime,ssd,compress=zstd,space_cache=v2,discard=async,subvol=@ /dev/mapper/archroot /mnt
+mkdir -p /mnt/{home,.snapshots}
+mount -t btrfs -o rw,noatime,ssd,compress=zstd,space_cache=v2,discard=async,subvol=@home /dev/mapper/archroot /mnt/home
+mount -t btrfs -o rw,noatime,ssd,compress=zstd,space_cache=v2,discard=async,subvol=@snapshots /dev/mapper/archroot /mnt/.snapshots
+
+mkdir -p /mnt/boot
+mount -t ext4 -o noatime,nodev,nosuid,noexec /dev/nvme0n1p2 /mnt/boot
+
+mkdir -p /mnt/boot/efi
+mount -t vfat -o rw,noatime /dev/nvme0n1p1 /mnt/boot/efi
+
+pacstrap /mnt base linux linux-firmware btrfs-progs cryptsetup vim sudo
+for dir in dev proc sys run; do mount --rbind /$dir /mnt/$dir; mount --make-rslave /mnt/$dir; done
+cp /etc/resolv.conf /mnt/etc/
+
+echo "tmpfs /tmp tmpfs defaults,nosuid,nodev,size=4G 0 0" >> /mnt/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab
+
+arch-chroot /mnt
+
+ls -ld /boot
+ls -ld /boot/efi
+
+passwd
+chsh -s /bin/bash root
+
+dd bs=515 count=4 if=/dev/urandom of=/boot/keyfile.bin
+chmod 600 /boot/keyfile.bin
+chown root:root /boot/keyfile.bin
+chmod -R g-rwx,o-rwx /boot
+
+cryptsetup -v luksAddKey /dev/nvme0n1p4 /boot/keyfile.bin
+cryptsetup -v luksAddKey /dev/nvme0n1p3 /boot/keyfile.bin
+
+cryptsetup luksOpen --test-passphrase --key-file /boot/keyfile.bin /dev/nvme0n1p3
+cryptsetup luksOpen --test-passphrase --key-file /boot/keyfile.bin /dev/nvme0n1p4
+
+echo "swapreserve UUID=$(blkid -s UUID -o value /dev/nvme0n1p3) /boot/keyfile.bin luks" >> /etc/crypttab
+echo "archroot UUID=$(blkid -s UUID -o value /dev/nvme0n1p4) /boot/keyfile.bin luks" >> /etc/crypttab
+
+pacman -Sy reflector 
+pacman -S base-devel grub efibootmgr intel-ucode reflector grub-btrfs iwd git openssh acpid wget
+
+timedatectl list-timezones
+ln -sf /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
+hwclock --systohc
+
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen; locale-gen
+echo LANG=en_US.UTF-8 >> /etc/locale.conf
+echo KEYMAP=us >> /etc/vconsole.conf
+
+echo "dangai" >> /etc/hostname
+
+useradd -m -G wheel -s /bin/bash zangetsu
+passwd zangetsu
+
+EDITOR=vim visudo
+
+sed -i 's:^MODULES.*:MODULES=(btrfs):g' /etc/mkinitcpio.conf
+sed -i 's/^HOOKS.*/HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block encrypt filesystems fsck)/g' /etc/mkinitcpio.conf
+sed -i 's:^FILES.*:FILES=(/boot/keyfile.bin):g' /etc/mkinitcpio.conf
+
+mkinitcpio -P
+
+findmnt /boot/efi
+findmnt /boot
+
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="Zanpakuto"
+grub-mkconfig -o /boot/grub/grub.cfg
+
+exit
+umount -R /mnt
+swapoff -a
+
+reboot
+```
 
 
 ## Sources: 
